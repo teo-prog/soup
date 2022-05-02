@@ -1,0 +1,97 @@
+<div class="row">
+    <h1 class="text-center mt-2">Welcome to the SOUP GAME</h1>
+
+    <div class="row ">
+        <div class="col-4">
+            <div class="row">
+                <div class="col">
+                    <label for="palabras" class="form-label"><b> Palabra </b></label>
+                    <input [(ngModel)]="palabra" type="text" placeholder="ingrese palabra" class="form-control shadow"
+                        (ngModelChange)="palabra = $event.toUpperCase()" (keydown.space)="$event.preventDefault()"
+                        pattern="[A-Za-z]+"
+                        [disabled]="status!='iniciar'">
+                </div>
+                <div class="col mt-2">
+                    <button class="mt-4 btn btn-success shadow" (click)="agregar_palabra()" [disabled]="palabra === ''"
+                        *ngIf="status!='jugando'">Agregar</button>
+                </div>
+            </div>
+
+
+        </div>
+        <div class="col">
+            <div class="row">
+                <div class="col">
+                    <label for="palabras" class="form-label"><b>Filas </b></label>
+                    <input [(ngModel)]="data_form['filas']" type="number" placeholder="min 10 - max 20 "
+                        class="form-control shadow"
+                        [disabled]="status!='iniciar'">
+
+                </div>
+                <div class="col">
+                    <label for="palabras" class="form-label"><b>Columnas </b></label>
+                    <input [(ngModel)]="data_form['columnas']" type="number" placeholder="min 10 - max 20 "
+                        class="form-control shadow"
+                        [disabled]="status!='iniciar'">
+                </div>
+                <div class="col-5 mt-2">
+                    <button class="mt-4 btn btn-success shadow me-2" (click)="jugar()"
+                        [disabled]=" !data_form['columnas'] || !data_form['palabras'] || !data_form['filas'] || data_form['filas']>=26 ||data_form['filas']<10 || data_form['columnas']>=26 || data_form['columnas']<10 || status === 'jugando'">Jugar</button>
+
+                    <button class="mt-4 btn btn-primary shadow me-2" (click)="resolver()"
+                       *ngIf="status=='jugando'">Resolver</button>
+
+                    <button class="mt-4 btn btn-danger shadow" (click)="resolver()" *ngIf="status=='resuelto'"
+                        (click)="reset()">Reset</button>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <div class="row mt-4">
+        <div class="col ">
+
+
+          
+            <li class="row" *ngFor="let arreglo of sopa_letras; let i = index">
+
+                <ul class="col" id="letra" *ngFor="let letra of arreglo;let j=index">
+                    <p *ngIf="(this.sopa_vacia[i][j] != this.sopa_letras[i][j])">
+                        {{letra}}
+                    </p>
+                     
+                    <p *ngIf="(this.sopa_vacia[i][j] == this.sopa_letras[i][j]) && status!='resuelto'">
+                        {{letra}}
+                    </p>
+                     
+                   <b *ngIf="(this.sopa_vacia[i][j] == this.sopa_letras[i][j]) && status=='resuelto'" style="background-color: rgb(239, 241, 105);">
+                    {{letra}}
+                   </b> 
+                </ul>
+            </li>
+
+        </div>
+
+        <div class="col-3 ">
+            <h2 class="text-center  mb-4 "> Lista de palabras</h2>
+            <div class="row " *ngFor="let palabra of data_form['palabras']">
+                <div class="col">
+                    {{palabra}}
+                </div>
+                <div class="col">
+                    <button *ngIf="this.fue_agregada==true && (status!='jugando' && status!='resuelto')"
+                        class="mb-1 btn-sm btn-danger  shadow" (click)="eliminar_palabra(palabra)">Eliminar</button>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+
+
+</div>
