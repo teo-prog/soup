@@ -82,18 +82,19 @@ export class SoupGameComponent implements OnInit {
 
     for (var i = 0; i < fil; i++) {
       if (palabras_desordenadas[i]) {
+
         this.palabras_fragmentada_en_letras[i] = palabras_desordenadas[i].split('')
         this.reversar_palabra = Math.floor(Math.random() * 2)
         if (this.reversar_palabra == 1) {
           this.palabras_fragmentada_en_letras[i].reverse()
-        }
-        var posicion_aletoria_horizontal = Math.floor(Math.random() * (fil - (this.palabras_fragmentada_en_letras[i].length)))
-        var pos_aletoria_vertical = Math.floor(Math.random() * (col - (this.palabras_fragmentada_en_letras[i].length)))
-        var pos_aleatoria = Math.floor(Math.random() * (col))
-        //llenado vertical--------------------------
-        console.log(this.palabras_fragmentada_en_letras)
+          }
+          var posicion_aletoria_horizontal = Math.floor(Math.random() * (fil - (this.palabras_fragmentada_en_letras[i].length)))
+          var pos_aletoria_vertical = Math.floor(Math.random() * (col - (this.palabras_fragmentada_en_letras[i].length)))
+          var pos_aleatoria = Math.floor(Math.random() * (col))
+          //llenado vertical--------------------------
+          console.log(this.palabras_fragmentada_en_letras)
 
-        console.log(c)
+          console.log(c)
 
 
         for (let j = 0; j < col; j++) {
