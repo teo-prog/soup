@@ -22,7 +22,6 @@ export class SoupGameComponent implements OnInit {
   }
   sopa_vacia: any[][] = []
   sopa_letras: any[][] = []
-
   status: string = 'iniciar'
   palabras_fragmentada_en_letras: any[][] = []
   fit: boolean
@@ -63,15 +62,6 @@ export class SoupGameComponent implements OnInit {
     // console.log(palabras_desordenadas)
     this.distribuir_palabras(fil, col, palabras_desordenadas)
     this.rellenar_sopa(fil, col)
-
-
-
-
-    //llenado vertical
-
-
-    //llenado diagonal
-
   }
   distribuir_palabras(fil: number, col: number, palabras_desordenadas: any) {
     //horizontal
@@ -201,4 +191,17 @@ export class SoupGameComponent implements OnInit {
     this.fit = false
     this.reversar_palabra = 0
   }
+  // Only Integer Numbers
+ // Only AlphaNumeric
+ keyPressAlphaNumeric(event) {
+
+  var inp = String.fromCharCode(event.keyCode);
+
+  if (/[a-zA-Z]/.test(inp)) {
+    return true;
+  } else {
+    event.preventDefault();
+    return false;
+  }
+}
 }

@@ -9,7 +9,8 @@
                     <input [(ngModel)]="palabra" type="text" placeholder="ingrese palabra" class="form-control shadow"
                         (ngModelChange)="palabra = $event.toUpperCase()" (keydown.space)="$event.preventDefault()"
                         pattern="[A-Za-z]+"
-                        [disabled]="status!='iniciar'">
+                        [disabled]="status!='iniciar'"
+                        (keypress)="keyPressAlphaNumeric($event)">
                 </div>
                 <div class="col mt-2">
                     <button class="mt-4 btn btn-success shadow" (click)="agregar_palabra()" [disabled]="palabra === ''"
@@ -23,14 +24,14 @@
             <div class="row">
                 <div class="col">
                     <label for="palabras" class="form-label"><b>Filas </b></label>
-                    <input [(ngModel)]="data_form['filas']" type="number" placeholder="min 10 - max 20 "
+                    <input [(ngModel)]="data_form['filas']" type="number" placeholder="min 10 - max 25 "
                         class="form-control shadow"
                         [disabled]="status!='iniciar'">
 
                 </div>
                 <div class="col">
                     <label for="palabras" class="form-label"><b>Columnas </b></label>
-                    <input [(ngModel)]="data_form['columnas']" type="number" placeholder="min 10 - max 20 "
+                    <input [(ngModel)]="data_form['columnas']" type="number" placeholder="min 10 - max 25 "
                         class="form-control shadow"
                         [disabled]="status!='iniciar'">
                 </div>
