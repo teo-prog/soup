@@ -193,7 +193,7 @@ export class SoupGameComponent implements OnInit {
   }
   // Only Integer Numbers
  // Only AlphaNumeric
- keyPressAlphaNumeric(event) {
+ soloLetras(event) {
 
   var inp = String.fromCharCode(event.keyCode);
 

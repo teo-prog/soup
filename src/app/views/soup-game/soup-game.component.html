@@ -10,7 +10,7 @@
                         (ngModelChange)="palabra = $event.toUpperCase()" (keydown.space)="$event.preventDefault()"
                         pattern="[A-Za-z]+"
                         [disabled]="status!='iniciar'"
-                        (keypress)="keyPressAlphaNumeric($event)">
+                        (keypress)="soloLetras($event)">
                 </div>
                 <div class="col mt-2">
                     <button class="mt-4 btn btn-success shadow" (click)="agregar_palabra()" [disabled]="palabra === ''"
