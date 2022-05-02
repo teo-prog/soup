@@ -68,42 +68,43 @@ export class SoupGameComponent implements OnInit {
     //Iniciar sopa  
     // var sopa_vacia:any[][]=[]
     this.iniciar_sopa(fil, col)
-    var c = 0
+
 
     for (var i = 0; i < fil; i++) {
+      var p = 0
       if (palabras_desordenadas[i]) {
-
         this.palabras_fragmentada_en_letras[i] = palabras_desordenadas[i].split('')
+        var posicion_aletoria_horizontal = Math.floor(Math.random() * (fil - (this.palabras_fragmentada_en_letras[i].length )))
+        var pos_aletoria_vertical = Math.floor(Math.random() * (col - (this.palabras_fragmentada_en_letras[i].length  )))
+        var pos_aleatoria = Math.floor(Math.random() * (col))
+
         this.reversar_palabra = Math.floor(Math.random() * 2)
         if (this.reversar_palabra == 1) {
           this.palabras_fragmentada_en_letras[i].reverse()
-          }
-          var posicion_aletoria_horizontal = Math.floor(Math.random() * (fil - (this.palabras_fragmentada_en_letras[i].length)))
-          var pos_aletoria_vertical = Math.floor(Math.random() * (col - (this.palabras_fragmentada_en_letras[i].length)))
-          var pos_aleatoria = Math.floor(Math.random() * (col))
-          //llenado vertical--------------------------
-          console.log(this.palabras_fragmentada_en_letras)
-
-          console.log(c)
-
-
-        for (let j = 0; j < col; j++) {
-
-          if ((this.palabras_fragmentada_en_letras[i].length == fil) && (!this.sopa_vacia[j][i + pos_aleatoria])) {
-            this.sopa_vacia[j][i + pos_aleatoria] = this.palabras_fragmentada_en_letras[i][j]
-            c++
-            console.log('entre')
-          }
-          if ((this.palabras_fragmentada_en_letras[i].length != fil) && (!this.sopa_vacia[j][i + pos_aleatoria])) {
-            this.sopa_vacia[j + pos_aletoria_vertical][i + posicion_aletoria_horizontal] = this.palabras_fragmentada_en_letras[i][j]
-            c++
-
-
-
-
-          }
         }
-        console.log(c)
+
+        //llenado vertical--------------------------
+        console.log(this.palabras_fragmentada_en_letras)
+        // for (let j = 0; j < col; j++) {
+
+        //   if ((this.palabras_fragmentada_en_letras[i].length == fil) && (this.sopa_vacia[j][i + pos_aleatoria] == null)) {
+        //     this.sopa_vacia[j][i + pos_aleatoria] = this.palabras_fragmentada_en_letras[i][j]
+
+        //     console.log(' palabra misma dimension...')
+        //   }
+        //   if ((this.palabras_fragmentada_en_letras[i].length != fil) && (this.sopa_vacia[j][i + pos_aleatoria] == null)) {
+
+        //     this.sopa_vacia[j + pos_aletoria_vertical][i + posicion_aletoria_horizontal] = this.palabras_fragmentada_en_letras[i][j]
+        //     console.log('llenando sopa...')
+        //   }
+        //   if(this.sopa_vacia[j][i + pos_aleatoria]!= null){
+        //     console.log('posicion llena, devolviendo el ciclo..')
+        //     i--
+        //     break;
+        //   }
+
+        // }
+
         //llenado horizontal-------------------------
         // for (let j = 0; j < col; j++) {
 
@@ -116,17 +117,17 @@ export class SoupGameComponent implements OnInit {
         //llenado en diagonal derecha-abajo--------------
 
 
-        // var palabra = palabras_desordenadas[i]
-        // console.log(palabra)
-        // for (var j = 0; j < palabra.length + 1; j++) {
+        var palabra = palabras_desordenadas[i]
+        console.log(palabra)
+        for (var j = 0; j < palabra.length + 1; j++) {
 
-        //   if ((this.sopa_vacia[i][j]=='') && ((col - j)>palabra.length-1)) {
-        //     this.sopa_vacia[i + j + pos_aletoria_vertical][j + posicion_aletoria_horizontal] = palabra[j - 1]
+          if ((this.sopa_vacia[i][j]==null) && ((col - j)>palabra.length-1)) {
+            this.sopa_vacia[i + j + pos_aletoria_vertical][j + posicion_aletoria_horizontal] = palabra[j - 1]
 
-        //   }
-        // }
+          }
+        }
 
-        //console.log(this.sopa_vacia)
+        console.log(this.sopa_vacia)
 
 
 
@@ -149,12 +150,12 @@ export class SoupGameComponent implements OnInit {
         this.sopa_letras[i][j] = (this.sopa_vacia[i][j]) ? this.sopa_vacia[i][j] : this.sopa_letras[i][j] = characters[Math.floor(Math.random() * 27)]
       }
     }
-    console.log(this.sopa_letras)
+    // console.log(this.sopa_letras)
   }
   iniciar_sopa(fil: number, col: number) {
-    for (let i = 0; i < 100; i++) {
+    for (let i = 0; i < 20; i++) {
       this.sopa_vacia[i] = []
-      for (let j = 0; j < 100; j++) {
+      for (let j = 0; j < 20; j++) {
         this.sopa_vacia[i][j] = null
       }
     }
@@ -163,17 +164,7 @@ export class SoupGameComponent implements OnInit {
     let fil = this.data_form['filas']
     let col = this.data_form['columnas']
     this.status = 'resuelto'
-    // for (let i = 0; i < fil; i++) {
-    //   for (let j = 0; j < col; j++) {
-    //     if (this.sopa_vacia[i][j] == this.sopa_letras[i][j]) {
-    //       this.sopa_letras[i][j] = '--'
-    //         ;
 
-    //     }
-
-    //   }
-
-    // }
 
   }
   reset() {
@@ -192,16 +183,16 @@ export class SoupGameComponent implements OnInit {
     this.reversar_palabra = 0
   }
   // Only Integer Numbers
- // Only AlphaNumeric
- soloLetras(event) {
+  // Only AlphaNumeric
+  soloLetras(event) {
 
-  var inp = String.fromCharCode(event.keyCode);
+    var inp = String.fromCharCode(event.keyCode);
 
-  if (/[a-zA-Z]/.test(inp)) {
-    return true;
-  } else {
-    event.preventDefault();
-    return false;
+    if (/[a-zA-Z]/.test(inp)) {
+      return true;
+    } else {
+      event.preventDefault();
+      return false;
+    }
   }
-}
 }
