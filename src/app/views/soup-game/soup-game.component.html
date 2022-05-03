@@ -114,10 +114,16 @@
                 </div>
                
 
-            </div>
+            </div> 
+          
+            <div *ngFor="let posicion of this.posicion_palabra; let i = index">
+                    <b>
+                        {{posicion}}
 
-
-            {{palabra_buscar}}
+                    </b>
+             </div>
+                
+            <!-- {{palabra_buscar}} -->
             <h2 class="text-center  mb-4 mt-2"> Lista de palabras</h2>
 
             <div class="row " *ngFor="let palabra of data_form['palabras']">

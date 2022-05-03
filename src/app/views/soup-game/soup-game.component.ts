@@ -34,6 +34,8 @@ export class SoupGameComponent implements OnInit {
   palabra_buscar: any
   palabra_separada: any[] = []
   palabra_separada_reversa: any[] = []
+  posicion_palabra: any[] = []
+
   ngOnInit(): void {
   }
 
@@ -49,6 +51,7 @@ export class SoupGameComponent implements OnInit {
     this.status = 'buscar'
     let fil = this.data_form['filas']
     let col = this.data_form['columnas']
+    this.posicion_palabra = []
     // separacion de palabras
     let palabra = this.palabra_buscar
     let palabra_reversa = ((palabra.split('')).reverse()).join('')
@@ -72,59 +75,79 @@ export class SoupGameComponent implements OnInit {
 
       // // extraer la posicion donde haye la palabra busqueda 
 
-      // this.palabra_separada = palabra.split('')
-      // let busqueda = fila.indexOf(palabra)
-      // if (busqueda != -1) {
-      //   for (let k = busqueda; k < busqueda + palabra.length; k++) {
-      //     this.sopa_busqueda[i][k] = this.palabra_separada[k - busqueda]
-      //   }
-      // }
+      this.palabra_separada = palabra.split('')
+      let busqueda = fila.indexOf(palabra)
 
+
+      if (busqueda != -1) {
+        for (let k = busqueda; k < busqueda + palabra.length; k++) {
+          this.sopa_busqueda[i][k] = this.palabra_separada[k - busqueda]
+
+          if(k==busqueda){
+              this.posicion_palabra[k]=[i+1,k+1]
+            }if(k== busqueda + palabra.length -1){
+              this.posicion_palabra[k]=[i+1,k+1]
+            }
+
+        }
+      }
+
+      // console.log(this.posicion_palabra)
 
       // //////////////    busqueda  horizontal reversa    ///////////////////////////////////////////////////
 
 
-      // // procesar la palabras
+      // procesar la palabras
 
-      // this.palabra_separada_reversa = palabra_reversa.split('')
-      // console.log(this.palabra_separada_reversa)
-      // // sacar la posicion donde hayo la palabara
-      // let busqueda_reversa = fila.indexOf(palabra_reversa)
-      // console.log(busqueda_reversa)
-      // console.log(palabra_reversa.length)
+      this.palabra_separada_reversa = palabra_reversa.split('')
+      console.log(this.palabra_separada_reversa)
+      // sacar la posicion donde hayo la palabara
+      let busqueda_reversa = fila.indexOf(palabra_reversa)
+      console.log(busqueda_reversa)
+      console.log(palabra_reversa.length)
 
-      // if (busqueda_reversa != -1) {
-      //   for (let k = busqueda_reversa; k < busqueda_reversa + palabra.length; k++) {
-      //     this.sopa_busqueda[i][k] = this.palabra_separada_reversa[k - busqueda_reversa]
-
-      //   }
-
-      // }
+      if (busqueda_reversa != -1) {
+        for (let k = busqueda_reversa; k < busqueda_reversa + palabra.length; k++) {
+          this.sopa_busqueda[i][k] = this.palabra_separada_reversa[k - busqueda_reversa]
+          if(k==busqueda_reversa){
+            this.posicion_palabra[k]=[i+1,k+1]
+          }if(k== busqueda_reversa + palabra.length -1){
+            this.posicion_palabra[k]=[i+1,k+1]
+          }
+        }
+        this.posicion_palabra.reverse()
+      }
 
       ////////////////         busqueda  vertical   ///////////////////////////////////////////////////////////
 
-          /////  cambiar la forma de lectura ahora la columnas son filas
-          // for (let k = 0; k < col; k++) {
-          //   this.sopa_vertical[i][k] = this.sopa_letras[k][i]
+      ///  cambiar la forma de lectura ahora la columnas son filas
+      for (let k = 0; k < col; k++) {
+        this.sopa_vertical[i][k] = this.sopa_letras[k][i]
 
-          //   this.palabra_separada = palabra.split('')
-          //   var fila_vertical = this.sopa_vertical[i].join('')
-          //   var busqueda_vertical = fila_vertical.indexOf(palabra)
-          //   if (busqueda_vertical != -1) {
-          //     for (let k = busqueda_vertical; k < busqueda_vertical + palabra.length; k++) {
-          //       this.sopa_busqueda[k][i] = this.palabra_separada[k - busqueda_vertical]
+        this.palabra_separada = palabra.split('')
+        var fila_vertical = this.sopa_vertical[i].join('')
+        var busqueda_vertical = fila_vertical.indexOf(palabra)
+        if (busqueda_vertical != -1) {
+          for (let k = busqueda_vertical; k < busqueda_vertical + palabra.length; k++) {
+            this.sopa_busqueda[k][i] = this.palabra_separada[k - busqueda_vertical]
 
-          //     }
-          //   }
-          // }
+            if (k == busqueda_vertical) {
+              this.posicion_palabra[k] = [i + 1, k + 1]
+            } if (k == busqueda_vertical + palabra.length - 1) {
+              this.posicion_palabra[k] = [i + 1, k + 1]
+            }
 
-          // console.log(fila_vertical)
-          // console.log(busqueda_vertical)
-          // console.log(palabra.length)
-          // console.log(this.palabra_separada)
+          }
+        }
+      }
 
-       ////////////////         busqueda  vertical reversa   ///////////////////////////////////////////////////////////
-       for (let k = 0; k < col; k++) {
+      console.log(fila_vertical)
+      console.log(busqueda_vertical)
+      console.log(palabra.length)
+      console.log(this.palabra_separada)
+
+      ////////////////         busqueda  vertical reversa   ///////////////////////////////////////////////////////////
+      for (let k = 0; k < col; k++) {
         this.sopa_vertical[i][k] = this.sopa_letras[k][i]
 
         this.palabra_separada_reversa = palabra_reversa.split('')
@@ -134,13 +157,23 @@ export class SoupGameComponent implements OnInit {
           for (let k = busqueda_vertical_reversa; k < busqueda_vertical_reversa + palabra.length; k++) {
             this.sopa_busqueda[k][i] = this.palabra_separada_reversa[k - busqueda_vertical_reversa]
 
+            if (k == busqueda_vertical_reversa) {
+              this.posicion_palabra[k] = [i + 1, k + 1]
+            } if (k == busqueda_vertical_reversa + palabra.length - 1) {
+              this.posicion_palabra[k] = [i + 1, k + 1]
+            }
+
           }
+          this.posicion_palabra.reverse()
+
         }
       }
+      ////////////////         busqueda  diagonal  de arriba izquiera hacia bajo derecha  ///////////////////////////////////////////////////////////
 
 
+      ////////////////         busqueda  diagonal  de abajo derecha hacia arriba izquiera///////////////////////////////////////////////////////////
 
-
+      this.posicion_palabra = this.posicion_palabra.filter(entry => /\S/.test(entry))
     }
 
 
@@ -265,9 +298,9 @@ export class SoupGameComponent implements OnInit {
     // console.log(this.sopa_letras)
   }
   iniciar_sopa(fil: number, col: number) {
-    for (let i = 0; i < 20; i++) {
+    for (let i = 0; i < 26; i++) {
       this.sopa_vacia[i] = []
-      for (let j = 0; j < 20; j++) {
+      for (let j = 0; j < 26; j++) {
         this.sopa_vacia[i][j] = null
       }
     }
@@ -276,6 +309,7 @@ export class SoupGameComponent implements OnInit {
     let fil = this.data_form['filas']
     let col = this.data_form['columnas']
     this.status = 'resuelto'
+    
 
 
   }
