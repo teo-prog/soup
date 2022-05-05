@@ -1,5 +1,5 @@
-<div class="row">
-    <h1 class="text-center mt-2">Welcome to the SOUP GAME</h1>
+<div class="row container  shadow" style="background-color: antiquewhite;">
+    <h1 class="text-center mt-4 mb-4">Welcome to the SOUP GAME</h1>
 
     <div class="row ">
         <div class="col-4">
@@ -33,13 +33,16 @@
                 </div>
                 <div class="col-5 mt-2">
                     <button class="mt-4 btn btn-success shadow me-2" (click)="jugar()"
-                        [disabled]=" !data_form['columnas'] || !data_form['palabras'] || !data_form['filas'] || data_form['filas']>=26 ||data_form['filas']<10 || data_form['columnas']>=26 || data_form['columnas']<10 || status === 'jugando'">Jugar</button>
+                        [disabled]=" !data_form['columnas'] || !data_form['palabras'] || !data_form['filas'] || data_form['filas']>=20 ||data_form['filas']< 10 || data_form['columnas']>=20 || data_form['columnas']<10 || status=='jugando' || status=='buscar' ">Jugar</button>
 
-                    <button class="mt-4 btn btn-primary shadow me-2" (click)="resolver()"
-                        *ngIf="status=='jugando' || status=='buscar'">Resolver</button>
+                    <!-- <button class="mt-4 btn btn-primary shadow me-2" (click)="resolver()"
+                        *ngIf="status=='jugando' || status=='buscar'">Resolver</button> -->
+                        <button class="mt-4 btn btn-success shadow me-2" (click)="jugar()"
+                        [disabled]=" !data_form['columnas'] || !data_form['palabras'] || !data_form['filas'] || data_form['filas']>=20 ||data_form['filas']<10 || data_form['columnas']>=20 || data_form['columnas']<10 ">Revolver Sopa</button>
 
-                    <button class="mt-4 btn btn-danger shadow" (click)="resolver()" *ngIf="status=='resuelto'"
+                    <button class="mt-4 btn btn-danger shadow"
                         (click)="reset()">Reset</button>
+                    
                 </div>
 
             </div>
@@ -50,15 +53,15 @@
 
 
 
-    <div class="row mt-4">
-        <div class="col ">
+    <div class="row mt-4 mb-4">
+        <div class="col shadow rounded text-center " style="background-color: blanchedalmond;">
 
 
 
-            <li class="row" *ngFor="let arreglo of sopa_letras; let i = index">
+            <li class="row " *ngFor="let arreglo of sopa_letras_replica; let i = index">
 
                 <ul class="col" id="letra" *ngFor="let letra of arreglo;let j=index">
-                    
+<!--                     
                     <div *ngIf="status!='buscar'" >
                         <p *ngIf="(this.sopa_vacia[i][j] != this.sopa_letras[i][j])">
                             {{letra}}
@@ -68,7 +71,7 @@
                             {{letra}}
                         </p>
     
-                        <b *ngIf="(this.sopa_vacia[i][j] == this.sopa_letras[i][j]) && status=='resuelto'"
+                        <b class="shadow" *ngIf="(this.sopa_vacia[i][j] == this.sopa_letras[i][j]) && status=='resuelto'"
                             style="background-color: rgb(239, 241, 105);">
                             {{letra}}
                         </b>
@@ -76,18 +79,18 @@
 
 
                     </div>
-                    
-                   <div *ngIf="status=='buscar'"> 
-                    <p *ngIf="(this.sopa_letras[i][j] != this.sopa_busqueda[i][j]) ">
+                     -->
+                   <div > 
+                    <p *ngIf="(this.sopa_letras[i][j] == this.sopa_letras_replica[i][j]) ">
                         {{letra}}
                     </p>
 
-                    <b *ngIf="(this.sopa_letras[i][j] == this.sopa_busqueda[i][j]) && status=='buscar'"
+                    <b  *ngIf="(this.sopa_letras[i][j]!= this.sopa_letras_replica[i][j]) && status=='buscar'"
                         style="background-color: rgb(239, 241, 105);">
                         {{letra}}
                     </b>
                     
-                    <p *ngIf="(this.sopa_letras[i][j]  ==this.sopa_busqueda[i][j]) && status!='buscar'">
+                    <p *ngIf="(this.sopa_letras[i][j]  !=this.sopa_letras_replica[i][j]) && status!='buscar'">
                         {{letra}}
                     </p>
                 </div>
@@ -115,14 +118,19 @@
                
 
             </div> 
-          
-            <div *ngFor="let posicion of this.posicion_palabra; let i = index">
-                    <b>
-                        {{posicion}}
+             <div class="mt-4 ms-2">
+               <p >
+                Posicion inicial : {{posicion_inicial}}
+               </p> 
 
-                    </b>
              </div>
+             <div class="ms-2">
+                 <p>
+                    Posicion final :  {{posicion_final}}
+                 </p>
                 
+
+             </div> 
             <!-- {{palabra_buscar}} -->
             <h2 class="text-center  mb-4 mt-2"> Lista de palabras</h2>
 
@@ -143,3 +151,10 @@
 
 
 </div>
+
+
+<!-- <head>My CloudFront Test</head>
+
+<p>My text content goes here.</p>
+<p><img src="https://d27z3d01rtydyq.cloudfront.net/check.png" alt="my test image">
+ -->
